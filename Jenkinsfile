@@ -10,9 +10,11 @@ pipeline {
 			}
 			stage('Cloning our Git'){
 				steps {
-					script{
-						git 'https://github.com/Kari-sad/Jenkins-terraform-kubernetes-flaskapp.git' 
-					}		
+					checkout scm
+					//checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], gitTool: 'Default', userRemoteConfigs: [[url: 'https://github.com/Kari-sad/Jenkins-terraform-kubernetes-flaskapp']]])
+					//script{
+					//	git 'https://github.com/Kari-sad/Jenkins-terraform-kubernetes-flaskapp.git' 
+					//}		
 				}
 			}
 			stage('terraform init'){
