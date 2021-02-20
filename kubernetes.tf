@@ -1,8 +1,12 @@
 terraform {
   required_providers {
     kubernetes = {
-      source = "hashicorp/kubernetes"
-      version = "2.0.2"
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.0"
+    }
+    docker = {
+      source = "kreuzwerker/docker"
+      version = "2.11.0"
     }
   }
 }
@@ -10,13 +14,21 @@ terraform {
 provider "kubernetes" {
   config_path = "~/.kube/config"
 }
-
-resource "flask_deployment" "flask" {
+provider "docker" {
+  host = "tcp://localhost:2376"
+}
+resource "kubernetes_namespace" "test" {
   metadata {
-    name = "flaskapp-deployment"
-    labels = {
-      App = "flaskapp"
-    }
+    name = "flaskapp"
+  }
+}
+
+resource "kubernetes_deployment" "flask" {
+  metadata {
+    name	= "flaskapp-deployment"
+	namespace = kubernetes_namespace.test.metadata.0.name    
+  
+  
   }
 
   spec {
@@ -45,13 +57,14 @@ resource "flask_deployment" "flask" {
     }
   }
 }
-resource "flask_service" "flask" {
+resource "kubernetes_service" "flask" {
   metadata {
-    name = "flask-service"
+    name	= "flask-service"
+	namespace = kubernetes_namespace.test.metadata.0.name													 
   }
   spec {
     selector = {
-      App = flaskapp
+      App = kubernetes_deployment.flask.spec.0.template.0.metadata.0.labels.app
     }
     port {
       node_port   = 30201
