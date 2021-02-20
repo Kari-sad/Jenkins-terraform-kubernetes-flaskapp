@@ -64,7 +64,7 @@ resource "kubernetes_service" "flask" {
   }
   spec {
     selector = {
-      App = kubernetes_deployment.flask.spec.0.template.0.metadata.0.labels.app
+      App = kubernetes_deployment.flask.spec.0.template.0.metadata.0.labels.App
     }
     port {
       node_port   = 30201
