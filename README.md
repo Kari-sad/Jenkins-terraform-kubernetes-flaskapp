@@ -86,7 +86,16 @@ Then set the path to git installer (**/usr/bin/git**) in jenkins Global Tool Con
     sudo usermod -aG docker jenkins  
     systemctl restart docker  
     sudo chmod 666 /var/run/docker.sock ---this worked
-**Add plugins:**  
+
+Install terraform:  
+[link to official installation website](https://learn.hashicorp.com/tutorials/terraform/install-cli)  
+
+    curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -  
+    sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"  
+    sudo apt-get update && sudo apt-get install terraform
+
+**In Jenkins, add these plugins:** 
+ 
 - Docker Pipeline  
 - Terraform  
 
