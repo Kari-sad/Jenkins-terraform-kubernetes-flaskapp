@@ -14,20 +14,15 @@ terraform {
 provider "kubernetes" {
   config_path = "~/.kube/config"
 }
+
 provider "docker" {
   host = "tcp://localhost:2376"
-}
-resource "kubernetes_namespace" "test" {
-  metadata {
-    name = "flaskapp"
-  }
 }
 
 resource "kubernetes_deployment" "flask" {
   metadata {
     name	= "flaskapp-deployment"
-	namespace = kubernetes_namespace.test.metadata.0.name    
-  
+	
   
   }
 
@@ -59,8 +54,7 @@ resource "kubernetes_deployment" "flask" {
 }
 resource "kubernetes_service" "flask" {
   metadata {
-    name	= "flask-service"
-	namespace = kubernetes_namespace.test.metadata.0.name													 
+    name	= "flask-service"												 
   }
   spec {
     selector = {
