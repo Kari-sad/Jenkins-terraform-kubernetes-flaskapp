@@ -47,7 +47,7 @@ resource "kubernetes_deployment" "flask" {
       spec {
         container {
           image = "karinegh18/casestudy:latest"
-          name  = "flaskappC"
+          name  = "flaskappc"
 
           port {
             container_port = 8080
