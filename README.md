@@ -1,8 +1,8 @@
 # Jenkins pipeline to deploy a flask application to a kubernetes cluster usine terraform. #
 
-VM with Ubuntu 20.04  
+### 1- VM with Ubuntu 20.04  
 
-### Install Java   ###
+### 2- Install Java   ###
     sudo apt update && sudo apt upgrade 
     apt-get install openjdk-8-jdk
 
@@ -17,7 +17,7 @@ VM with Ubuntu 20.04
         export JAVA_HOME=/usr
         export PATH=$JAVA_HOME/bin:$PATH
 
-### Install Jenkins 
+### 3- Install Jenkins 
  
 [https://pkg.jenkins.io/debian-stable/](https://pkg.jenkins.io/debian-stable/)
 
@@ -57,12 +57,12 @@ VM with Ubuntu 20.04
  
      `cat /var/lib/jenkins/secrets/initialAdminPassword`
 - Copy the key and paste it into unlock jenkins /administrator password     
-- Install suggested plugins    
+- **Install suggested plugins** (if not you need to be aware of needed plugins  and install them one by one)   
 - create new admin user    
 - save and finish    
 - start jenkins  
 
-### install git ###
+### 4- install git ###
 
     sudo apt update  
     sudo apt install git  
@@ -75,7 +75,7 @@ Then set the path to git installer (**/usr/bin/git**) in jenkins Global Tool Con
     git config --global user.name "abc de"   
     git config --global user.email abcde@example.com
 
-### Install docker ###
+### 5- Install docker ###
 [Follow link](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
 
 
@@ -87,19 +87,20 @@ Then set the path to git installer (**/usr/bin/git**) in jenkins Global Tool Con
     systemctl restart docker  
     sudo chmod 666 /var/run/docker.sock ---this worked
 
-Install terraform:  
+### 6- Install terraform ###
+
 [link to official installation website](https://learn.hashicorp.com/tutorials/terraform/install-cli)  
 
     curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -  
     sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"  
     sudo apt-get update && sudo apt-get install terraform
 
-**In Jenkins, add these plugins:** 
+### 7- In Jenkins, add these plugins ###
  
 - Docker Pipeline  
 - Terraform  
 
-### Install kind and create cluster  ###
+### 8- Install kind and create cluster  ###
 [Follow link](https://octopus.com/blog/testing-with-kind)
 
     curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.10.0/kind-linux-amd64  
@@ -117,10 +118,24 @@ Verify that your cluster exists by listing your kind clusters:
   
 `kind get clusters ` 
 
-### Install kubectl ###
+### 9- Install kubectl ###
 [Follow link](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-using-native-package-management)    
 point kubectl to interact with this cluster  
 
     kubectl cluster-info --context kind-app
 
-From Jenkins create a jenkins pipeline jenkinsfile
+
+### 10- Jenkins pipeline ###
+**Consideration:**     -> Git repo must be in master branch  
+**From Jenkins**  
+- Create a jenkins pipeline  
+- If you want to set a trigger : Build Triggers -put you schedule in Poll SCM -schedule  
+- Pipeline:   
+> Definition: select pipeline script from SCM  
+> SCM: select Git  
+> Repository: put repository URL  
+> Script path: Jenkinsfile.  
+> Save   
+
+- Run a build  
+- To scale up or down, change replicas in kubernetes.tf
