@@ -1,13 +1,13 @@
 pipeline {
 		agent any	
 		stages {
-			stage('Clean workspace'){
-				steps{
-					script{
-						cleanWs()						
-					}
-				}
-			}
+			//stage('Clean workspace'){
+			//	steps{
+			//		script{
+			//			cleanWs()						
+			//		}
+			//	}
+			//}
 			stage('Cloning our Git'){
 				steps {
 					checkout scm
