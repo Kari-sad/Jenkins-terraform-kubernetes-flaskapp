@@ -1,4 +1,4 @@
-# Jenkins pipeline to deploy a flask application to a kubernetes cluster usine terraform. #
+# Jenkins pipeline to deploy a flask application to a kubernetes cluster using terraform. #
 
 ### 1- VM with Ubuntu 20.04  
 
