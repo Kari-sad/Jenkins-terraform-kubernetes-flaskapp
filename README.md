@@ -27,7 +27,7 @@
     
   `deb https://pkg.jenkins.io/debian-stable binary/ ` 
   
-  echo "[deb https://pkg.jenkins.io/debian-stable binary/]" | sudo tee -a /etc/apt/sources.list
+  echo "deb https://pkg.jenkins.io/debian-stable binary/" | sudo tee -a /etc/apt/sources.list
 
 - Update local package index, then finally install Jenkins: 
  
