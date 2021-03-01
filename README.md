@@ -4,7 +4,7 @@
 
 ### 2- Install Java   ###
     sudo apt update && sudo apt upgrade 
-    apt-get install openjdk-8-jdk
+    sudo apt-get install openjdk-8-jdk
 
 **Check java version installed**  
 
